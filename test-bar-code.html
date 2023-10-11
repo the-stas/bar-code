@@ -12,30 +12,33 @@
 
 <body>
     <h2>
-      readFile
-    </h2>
-    <div id="readFile">
-
-    </div>
-
-
-    <h2>
       barcodeDetector
     </h2>
     <div id="barcodeDetectorLog">
 
     </div>
 
-    <h2>
-      error
-    </h2>
-    <div id="barcodeDetectorError">
+    <div id="rootError" hidden>
+        <h2>
+            error
+        </h2>
+        <div id="barcodeDetectorError">
 
+        </div>
+    </div>
+
+    <div>
+        <h2>
+            supportedFormats
+        </h2>
+        <div id="supportedFormats">
+
+        </div>
     </div>
 
     <div id="root">
       <input id="uploadInput"
-      type="file" name="imgName0" accept="image/*"
+      type="file" name="imgName0" accept="image/*" capture="environment"
       multiple
   >
 
