@@ -14,12 +14,6 @@ function init() {
 
   function uploadInputChange( barcodeDetector, { target } ) {
     const file = target.files[0];
-      console.log('readFile');
-      console.log(file);
-      const details = document.getElementById( 'readFile' );
-      const barcodeDetectorLog = document.getElementById( 'barcodeDetectorLog' );
-
-      details.textContent = JSON.stringify( file );
 
     barcodeDetector.detect(file).then((barcodes) => {
         barcodes.forEach((barcode, index) => {
