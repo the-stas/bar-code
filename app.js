@@ -21,6 +21,7 @@ function init() {
       barcodeDetectorError.textContent = '';
       document.getElementById( 'rootError' ).hidden = true;
     const file = target.files[0];
+      const barcodeDetectorLog = document.getElementById( 'barcodeDetectorLog' );
 
     barcodeDetector.detect(file).then((barcodes) => {
         if ( barcodes.length <= 0 ) {
