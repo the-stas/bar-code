@@ -16,13 +16,13 @@ function init() {
     const file = target.files[0];
 
     barcodeDetector.detect(file).then((barcodes) => {
-        barcodes.forEach((barcode, index) => {
-            if ( barcode.length <= 0 ) {
-                const barcodeDetectorError = document.getElementById( 'barcodeDetectorError' );
+        if ( barcodes.length <= 0 ) {
+            const barcodeDetectorError = document.getElementById( 'barcodeDetectorError' );
 
-                barcodeDetectorError.textContent = 'No bar codes were detected';
-                document.getElementById( 'rootError' ).hidden = false;
-            }
+            barcodeDetectorError.textContent = 'No bar codes were detected';
+            document.getElementById( 'rootError' ).hidden = false;
+        }
+        barcodes.forEach((barcode, index) => {
             barcodeDetectorLog.textContent += `${ index } ) ${ barcode.rawValue }\n`;
             console.log(barcode.rawValue);
         });
