@@ -6,13 +6,20 @@ function init() {
     } );
     window?.BarcodeDetection?.getSupportedFormats?.().then((supportedFormats) => {
         console.log('supportedFormats ->');
+        const supportedFormatsRoot = document.getElementById( 'supportedFormatsRoot' );
         const supportedFormats2 = document.getElementById( 'supportedFormats' );
+
+        supportedFormatsRoot.hidden = false;
         supportedFormats.forEach((format) => supportedFormats2.textContent += JSON.stringify( format ));
     });
     document.getElementById( 'uploadInput' ).addEventListener( 'change', ( e ) => uploadInputChange( barcodeDetector, e ) );
 }
 
   function uploadInputChange( barcodeDetector, { target } ) {
+      const barcodeDetectorError = document.getElementById( 'barcodeDetectorError' );
+
+      barcodeDetectorError.textContent = '';
+      document.getElementById( 'rootError' ).hidden = true;
     const file = target.files[0];
 
     barcodeDetector.detect(file).then((barcodes) => {
@@ -23,7 +30,7 @@ function init() {
             document.getElementById( 'rootError' ).hidden = false;
         }
         barcodes.forEach((barcode, index) => {
-            barcodeDetectorLog.textContent += `${ index } ) ${ barcode.rawValue }\n`;
+            barcodeDetectorLog.textContent += `${ index + 1 } ) ${ barcode.rawValue }\n`;
             console.log(barcode.rawValue);
         });
       })
