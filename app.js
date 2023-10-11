@@ -20,27 +20,26 @@ function init() {
 
       barcodeDetectorError.textContent = '';
       document.getElementById( 'rootError' ).hidden = true;
-    const file = target.files[0];
+    const files = [...target.files];
       const barcodeDetectorLog = document.getElementById( 'barcodeDetectorLog' );
 
+files.forEach( (file, index) => {
     barcodeDetector.detect(file).then((barcodes) => {
         if ( barcodes.length <= 0 ) {
-            const barcodeDetectorError = document.getElementById( 'barcodeDetectorError' );
-
-            barcodeDetectorError.textContent = 'No bar codes were detected';
-            document.getElementById( 'rootError' ).hidden = false;
+            barcodeDetectorLog.textContent += `${ index + 1 } ) No bar codes were detected !\n`;
         }
-        barcodes.forEach((barcode, index) => {
+        barcodes.forEach((barcode) => {
             barcodeDetectorLog.textContent += `${ index + 1 } ) ${ barcode.rawValue }\n`;
             console.log(barcode.rawValue);
         });
-      })
-      .catch((err) => {
-          const barcodeDetectorError = document.getElementById( 'barcodeDetectorError' );
+    })
+        .catch((err) => {
+            const barcodeDetectorError = document.getElementById( 'barcodeDetectorError' );
 
-          barcodeDetectorError.textContent = JSON.stringify( err );
+            barcodeDetectorError.textContent = JSON.stringify( err );
 
-          document.getElementById( 'rootError' ).hidden = false;
-        console.log(err);
-      });
+            document.getElementById( 'rootError' ).hidden = false;
+            console.log(err);
+        });
+} )
 }
