@@ -34,6 +34,7 @@ function init() {
       console.log('readFile');
       console.log(file);
       const details = document.getElementById( 'readFile' );
+      const barcodeDetectorLog = document.getElementById( 'barcodeDetectorLog' );
 
       details.textContent = JSON.stringify( file );
 
@@ -46,7 +47,7 @@ function init() {
       .catch((err) => {
           const barcodeDetectorError = document.getElementById( 'barcodeDetectorError' );
 
-          barcodeDetectorError.textContent = err;
+          barcodeDetectorError.textContent = JSON.stringify( err );
         console.log(err);
       });
 }
