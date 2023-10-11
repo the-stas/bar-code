@@ -5,12 +5,6 @@ function init() {
         formats: ["upc_a", "upc_e"],
     } );
 
-    window?.BarcodeDetection?.getSupportedFormats().then((supportedFormats) => {
-        console.log('supportedFormats ->');
-        const supportedFormats2 = document.getElementById( 'supportedFormats' );
-        supportedFormats.forEach((format) => supportedFormats2.textContent += JSON.stringify( format ));
-    });
-
     barcodeDetector.addEventListener("load", ({ detail }) => {
         const details = document.getElementById( 'details' );
 
