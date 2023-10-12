@@ -28,7 +28,9 @@ function init() {
 // Basic settings for the video to get from Webcam
     const constraints = {
         audio: false,
-        video: true,
+        video: isMobile2() ? {
+            facingMode: 'environment',
+        } : true,
     };
 
 // This condition will ask permission to user for Webcam access
@@ -196,4 +198,12 @@ function generateFileNameId( name ) {
 
 function currentFileUnique( newFileContent ) {
     return adaptedFiles.filter( ( currentFile ) => currentFile.srcBase64 === newFileContent ).length === 0;
+}
+
+function isMobile() {
+    return /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent);
+}
+
+function isMobile2() {
+    return isMobile() || /Windows Mobile|iemobile|Puffin|Silk|Opera Mini/i.test( navigator.userAgent );
 }
