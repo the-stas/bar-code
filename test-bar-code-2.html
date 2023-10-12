@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>
+    Bar Code Scanner
+  </title>
+    <script src="https://fastly.jsdelivr.net/npm/barcode-detector@2/dist/iife/pure.min.js"></script>
+</head>
+
+<body>
+    <h1>
+      barcode scanner v2
+    </h1>
+    <div id="root" style="margin-bottom: 20px;">
+<!--      <input id="uploadInput"-->
+<!--             style="margin: 20px;"-->
+<!--             placeholder="Upload an image with bar code"-->
+<!--             type="file" name="imgName0" accept="image/*" capture="environment"-->
+<!--             multiple-->
+<!--      >-->
+        <div>
+            <h2>
+                LIVE
+            </h2>
+        <video id="video" playsinline autoplay alt="Webcam video stream"></video>
+        </div>
+        <div>
+            <h2>
+                current
+            </h2>
+            <canvas></canvas>
+        </div>
+        <button id="clear" style="margin: 20px;">
+            Clear results
+        </button>
+    </div>
+    <ul id="barcodeDetectorLog" style="list-style: none; padding: 0; margin: 0;">
+
+    </ul>
+    <script src="app-2.js"></script>
+
+</body>
+
+</html>
