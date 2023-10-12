@@ -10,16 +10,19 @@ function init() {
     } );
 
     document.getElementById( 'uploadInput' ).addEventListener( 'change', ( e ) => uploadInputChange( barcodeDetector, e ) );
+    document.getElementById( 'clear' ).addEventListener( 'click', ( e ) => {
+        e.preventDefault();
+        const barcodeDetectorLog = document.getElementById( 'barcodeDetectorLog' );
+
+        barcodeDetectorLog.innerHTML = '';
+        rawFiles = [];
+        adaptedFiles = [];
+        uniqueNameForFileCounter = 0;
+    } );
 }
 
 async function uploadInputChange( barcodeDetector, { target } ) {
     const barcodeDetectorLog = document.getElementById( 'barcodeDetectorLog' );
-
-    barcodeDetectorLog.innerHTML = '';
-    rawFiles = [];
-    adaptedFiles = [];
-    uniqueNameForFileCounter = 0;
-
     const files = [ ... target.files ];
 
     rawFiles = files;
