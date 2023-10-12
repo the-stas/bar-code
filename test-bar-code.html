@@ -14,35 +14,17 @@
     <h1>
       barcode scanner
     </h1>
-    <div id="barcodeDetectorLog">
-
-    </div>
-
-    <div id="rootError" hidden style="color: red;">
-        <h2>
-            error
-        </h2>
-        <div id="barcodeDetectorError">
-
-        </div>
-    </div>
-
-    <div id="supportedFormatsRoot" hidden>
-        <h2>
-            supportedFormats
-        </h2>
-        <div id="supportedFormats">
-
-        </div>
-    </div>
-
-    <div id="root">
+    <div id="root" style="margin-bottom: 20px;">
       <input id="uploadInput"
-      type="file" name="imgName0" accept="image/*" capture="environment"
-      multiple
-  >
+             placeholder="Upload an image with bar code"
+             type="file" name="imgName0" accept="image/*" capture="environment"
+             multiple
+      >
 
     </div>
+    <ul id="barcodeDetectorLog" style="list-style: none; padding: 0; margin: 0;">
+
+    </ul>
     <script src="app.js"></script>
 
 </body>
