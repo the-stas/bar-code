@@ -21,16 +21,17 @@
 <!--             type="file" name="imgName0" accept="image/*" capture="environment"-->
 <!--             multiple-->
 <!--      >-->
-        <div>
+        <div id="videoCont">
             <h2>
                 LIVE
             </h2>
         <video id="video" playsinline autoplay alt="Webcam video stream"></video>
         </div>
         <div>
-            <h2>
+            <h2 id="preview">
                 preview
             </h2>
+            <img src="" id="finalImg" hidden>
             <canvas></canvas>
         </div>
         <button id="clear" style="margin: 20px;">

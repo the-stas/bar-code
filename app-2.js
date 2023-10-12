@@ -12,15 +12,12 @@ function init() {
     // document.getElementById( 'uploadInput' ).addEventListener( 'change', ( e ) => uploadInputChange( barcodeDetector, e ) );
     document.getElementById( 'clear' ).addEventListener( 'click', ( e ) => {
         e.preventDefault();
-        const barcodeDetectorLog = document.getElementById( 'barcodeDetectorLog' );
-
-        barcodeDetectorLog.innerHTML = '';
-        rawFiles = [];
-        adaptedFiles = [];
-        uniqueNameForFileCounter = 0;
+        window.location.reload();
     } );
 
     const video = document.querySelector("#video");
+    const videoCont = document.querySelector("#videoCont");
+    const finalImg = document.querySelector("#finalImg");
     const canvas = document.querySelector('canvas');
     const ctx = canvas.getContext('2d');
 
@@ -51,6 +48,8 @@ function init() {
 
             })
             .catch(function( e ) {
+                document.body.innerHTML = '😔😔😔';
+                document.body.style.fontSize = '200px';
                 console.log("Something went wrong!");
                 console.log(e);
             });
@@ -76,6 +75,7 @@ function init() {
     }
 
     const barcodeDetectorLog = document.getElementById( 'barcodeDetectorLog' );
+    const preview = document.getElementById( 'preview' );
 
 
 
@@ -83,6 +83,9 @@ function init() {
     //     // Analyze the video stream.
         setInterval(async () =>  {
             if (video.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA) {
+
+                canvas.height = video.videoHeight;
+                canvas.width = video.videoWidth;
 
 // Draw the current frame of the video onto the canvas element.
                 ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
@@ -98,10 +101,18 @@ function init() {
 //                 document.body.appendChild(image);
                 const scan = await processFile( image, barcodeDetector );
 
-                barcodeDetectorLog.textContent = scan;
 
                 if ( ! scan?.startsWith( 'No bar' ) ) {
                     stop();
+                    barcodeDetectorLog.innerHTML = `<p>Bar code: <b>${ scan }</b></p>`;
+                    preview.textContent = 'Result:';
+                    videoCont.hidden = true;
+                    canvas.hidden = true;
+                    finalImg.hidden = false;
+                    finalImg.src = blobURL;
+                }
+                else {
+                    barcodeDetectorLog.textContent = scan;
                 }
             }
         }, 100);
