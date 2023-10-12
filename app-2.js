@@ -29,7 +29,9 @@ function init() {
     const constraints = {
         audio: false,
         video: isMobile2() ? {
-            facingMode: 'environment',
+            facingMode: {
+                exact: 'environment',
+            },
         } : true,
     };
 
