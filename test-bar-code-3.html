@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>
+    Bar Code Scanner
+  </title>
+    <script src="https://cdn.jsdelivr.net/npm/@ericblade/quagga2/dist/quagga.min.js"></script>
+</head>
+
+<body>
+    <h1>
+      barcode scanner quagga2
+    </h1>
+    <div id="root" style="margin-bottom: 20px;">
+      <input id="uploadInput"
+             style="margin: 20px;"
+             placeholder="Upload an image with bar code"
+             type="file" name="imgName0" accept="image/*"
+             multiple
+      >
+    </div>
+    <ul id="barcodeDetectorLog" style="list-style: none; padding: 0; margin: 0;">
+
+    </ul>
+    <div id="result_strip">
+        <ul class="thumbnails"></ul>
+    </div>
+    <script src="app-3.js"></script>
+
+</body>
+
+</html>
