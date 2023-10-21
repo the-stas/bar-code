@@ -12,26 +12,24 @@
 
 <body>
     <h1>
-      barcode scanner v2
+      barcode scanner v3
     </h1>
     <div id="root" style="margin-bottom: 20px;">
-<!--      <input id="uploadInput"-->
-<!--             style="margin: 20px;"-->
-<!--             placeholder="Upload an image with bar code"-->
-<!--             type="file" name="imgName0" accept="image/*" capture="environment"-->
-<!--             multiple-->
-<!--      >-->
         <div id="videoCont">
             <h2>
                 LIVE
             </h2>
         <video id="video" playsinline autoplay alt="Webcam video stream"></video>
         </div>
-        <div>
-            <h2 id="preview">
-                preview
-            </h2>
-            <img src="" id="finalImg" hidden>
+        <div id="preview" hidden>
+            <div style="display: flex;align-items: center;">
+            <p>
+                Result
+            </p>
+            <p id="code" style="margin-left: 20px;font-weight: 700">
+
+            </p>
+            </div>
             <canvas></canvas>
         </div>
         <button id="clear" style="margin: 20px;">

@@ -17,7 +17,7 @@ function init() {
 
     const video = document.querySelector("#video");
     const videoCont = document.querySelector("#videoCont");
-    const finalImg = document.querySelector("#finalImg");
+
     const canvas = document.querySelector('canvas');
     const ctx = canvas.getContext('2d');
 
@@ -64,8 +64,8 @@ function init() {
     //
 
     function stop(e) {
-        const stream = video.srcObject;
-        const tracks = stream.getTracks();
+        const stream = video?.srcObject;
+        const tracks = stream?.getTracks();
 
         for (let i = 0; i < tracks.length; i++) {
             const track = tracks[i];
@@ -76,6 +76,7 @@ function init() {
 
     const barcodeDetectorLog = document.getElementById( 'barcodeDetectorLog' );
     const preview = document.getElementById( 'preview' );
+    const codeCont = document.getElementById( 'code' );
 
 
 
@@ -99,82 +100,55 @@ function init() {
 
 // Display the image element.
 //                 document.body.appendChild(image);
-                const scan = await processFile( image, barcodeDetector );
+                processFile( image, barcodeDetector )
+                    .then(
+                        (scan) => {
+                            ctx.strokeStyle = 'yellow';
+                            ctx.lineWidth = 6;
+                            // ctx.fillRect(scan.boundingBox.x, scan.boundingBox.y, scan.boundingBox.width, scan.boundingBox.height);
+                            ctx.strokeRect(scan.boundingBox.x, scan.boundingBox.y, scan.boundingBox.width, scan.boundingBox.height);
 
-
-                if ( ! scan?.startsWith( 'No bar' ) ) {
-                    stop();
-                    barcodeDetectorLog.innerHTML = `<p>Bar code: <b>${ scan }</b></p>`;
-                    preview.textContent = 'Result:';
-                    videoCont.hidden = true;
-                    canvas.hidden = true;
-                    finalImg.hidden = false;
-                    finalImg.src = blobURL;
-                }
-                else {
-                    barcodeDetectorLog.textContent = scan;
-                }
+                            // if (Array.isArray( scan ) && scan.length > 0) {
+                            //     let codes = '';
+                            //
+                            //     scan.forEach( ( barcode, index ) => {
+                            //         codes += `${ index +1 }) ${ barcode.rawValue };\n`;
+                            //     } );
+                            //
+                            //     scan = codes;
+                            // }
+                            stop();
+                            preview.hidden = false;
+                            codeCont.textContent = scan.rawValue;
+                            videoCont.hidden = true;
+                            canvas.hidden = false;
+                        }
+                    ).catch( (error) => {
+                    barcodeDetectorLog.textContent = error;
+                } )
             }
         }, 100);
     // });
 }
 
-async function uploadInputChange( barcodeDetector, { target } ) {
-    const barcodeDetectorLog = document.getElementById( 'barcodeDetectorLog' );
-    const files = [ ... target.files ];
-
-    rawFiles = files;
-
-    await Promise.all( rawFiles.map( ( file ) => adaptRawFile( file ) ) );
-
-    const detectionResults = await Promise.all( adaptedFiles.map( ( { file } ) => processFile( file, barcodeDetector ) ) );
-
-    barcodeDetectorLog.innerHTML = getMarkup( adaptedFiles, detectionResults );
-}
-
-function adaptRawFile( file ) {
-    return new Promise( ( resolve ) => { // eslint-disable-line no-loop-func
-        const reader = new FileReader();
-
-        reader?.addEventListener( 'load', ( event ) => {
-            if ( currentFileUnique( event.target.result ) ) {
-                adaptedFiles.push( {
-                    srcBase64: event.target.result,
-                    id: generateFileNameId( file.name ),
-                    file,
-                } );
-            }
-
-            resolve();
-        } );
-
-        reader.readAsDataURL( file );
-    } );
-}
-
 function processFile( file, barcodeDetector ) {
-    return new Promise( ( resolve ) => {
+    return new Promise( ( resolve, reject ) => {
         barcodeDetector.detect( file )
                        .then( ( barcodes ) => {
                            if ( barcodes.length <= 0 ) {
-                               resolve( 'No bar codes were detected! Provided image is not either UPC A or UPC E bar code type' );
+                               // reject( 'No bar codes were detected! Provided image is not either UPC A or UPC E bar code type' );
                            }
                            else if ( barcodes.length === 1 ) {
                                barcodes.forEach( ( barcode ) => {
-                                   resolve( barcode.rawValue );
+                                   resolve( barcode );
                                } );
                            }
                            else {
-                               let codes = '';
-
-                               barcodes.forEach( ( barcode, index ) => {
-                                   codes += `${ index +1 }) ${ barcode.rawValue };\n`;
-                               } );
-                               resolve( codes );
+                               resolve( barcodes );
                            }
                        } )
                        .catch( ( err ) => {
-                           resolve( `No bar codes were detected. Error: ${ err }` );
+                           reject( `No bar codes were detected. Error: ${ err }` );
                        } );
     } );
 }
